@@ -1,0 +1,28 @@
+https://codeforces.com/problemset/problem/50/A
+
+Español:
+En el primer caso veo cuando el tablero tiene columnas pares,
+en estos casos se pueden ingresar dominoes horizontalmente hasta
+la última columna, sea par o impar.
+
+En el segundo caso veo cuando el tablero tiene filas pares,
+en estos casos se pueden ingresar dominoes verticalmente hasta
+la última columna, sea par o impar.
+
+En el tercer caso, veo si ambos son impares, si es así,
+pues, se llena un área con dominoes verticalmente, y la última fila que
+sobra se llena con dominoes horizontalmente, solo queda un cuadrito vacío.
+
+Aparentemente este ejercicio se puede resolver simplemente multiplicando
+M*N/2, truncando la parte decimal (usas int y ya), no vi eso a la primera,
+igual se puede testear a ver.
+
+English:
+In the first case, I see when the board has even columns. In these cases, 
+dominoes can be inserted horizontally up to the last column, be it even or odd.
+
+In the second case, I see when the board has even rows. In these cases, dominoes can be inserted vertically up to the last column, be it even or odd.
+
+In the third case, I see if both are odd. If so, well, one area is filled with dominoes vertically, and the remaining last row is filled with dominoes horizontally, leaving only one empty square.
+
+Apparently, this exercise can be solved simply by multiplying M*N/2, truncating the decimal part (you just use int), I didn't see that at first, we can still test it to check.
