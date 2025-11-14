@@ -1,0 +1,7 @@
+https://codeforces.com/problemset/problem/617/A
+
+Español:
+Es trivial: lo más lógico es empezar por 5 (el paso más largo). Si el valor de x/5 es mayor o igual que 1, entonces se pueden hacer pasos de ese tamaño. Luego se almacenan esos pasos y se conserva el residuo de la división para pasar al siguiente número (4,3,2,1...).
+
+English:
+It's trivial: the most logical approach is to start with 5 (the largest step). If x/5 is greater than or equal to 1, then you can take steps of that size. Then store those steps and keep the remainder of the division to move on to the next number (4,3,2,1...).
