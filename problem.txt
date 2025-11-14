@@ -1,0 +1,23 @@
+2N estudiantes.
+N grupos.
+d_i, distancia entre las casas de 2 estudiantes en el grupo i.
+	sqrt((x_2 - x_1)^2 + (y_2 - y_1)^2)
+
+con backtracking:
+
+backtracking():
+    if there's no more houses:
+        evaluate(partial_solution)
+        return
+    actual = first available house
+    for each not paired house i:
+        partial_solution += distance(actual, house i)
+        pair(actual, house i)
+        backtracking()
+        partial_solution -= distance(actual, house i)
+        unpair(actual, house i)
+
+Esto dará a lo sumo 15!! = 2 millones aprox soluciones posibles, parece válido para una computadora moderna.
+Pero según dique es dp.
+
+

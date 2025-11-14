@@ -4,13 +4,12 @@
 #include <vector>
 
 using ll = long long;
-using ull = unsigned long long;
+using ii = std::pair<int,int>;
 using vi = std::vector<int>;
 using vll = std::vector<ll>;
-using vull = std::vector<ull>;
+using vii = std::vector<ii>;
 using mati = std::vector<std::vector<int>>;
 using matll = std::vector<std::vector<ll>>;
-using matull = std::vector<std::vector<ull>>;
 
 int main() {
     std::ios::sync_with_stdio(0);
