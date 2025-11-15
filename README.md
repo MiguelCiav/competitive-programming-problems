@@ -1,6 +1,6 @@
 # Competitive Programming Problems
 
-## Problems solved until today: 3
+## Problems solved to date: 3
 
 Hello! this is a repository where i upload some competitive programming problems, and a explained solution for every one of them (both in spanish and english).
 I'm not an elite programmer, but i'm doing my best to be one. 
