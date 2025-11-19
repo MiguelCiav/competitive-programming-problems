@@ -18,6 +18,17 @@ float distance(ii a, ii b){
     return std::sqrt(std::pow(a.first - b.first, 2) + std::pow(a.second - b.second, 2));
 }
 
+short 
+
+short next_index(short combination, short number_of_students) {
+    short index = number_of_students;
+    while(combination != 0) {
+        combination = combination >> 1;
+        index--;
+    }
+    return index;
+}
+
 float dp(short combination, vii &students, int index, vi &memo) {
     if(combination == 0) return 0;
     if(memo[combination] != -1) return memo[combination];
@@ -25,15 +36,12 @@ float dp(short combination, vii &students, int index, vi &memo) {
     
 }
 
-// 0 -> primera pos
-// 
-
 int main() {
     std::ios::sync_with_stdio(0);
     std::cin.tie(0);
     int number_of_students, _case = 1;
     std::cin >> number_of_students;
-    short combination = std::pow(2, number_of_students) - 1;
+    short combination = 1;
     while(number_of_students != 0){
         vii students;
         vi memo = vi(256, -1);
