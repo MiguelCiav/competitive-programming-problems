@@ -14,6 +14,16 @@ using matll = vector<vector<ll>>;
 int main() {
     ios::sync_with_stdio(0);
     cin.tie(0);
-    
+    int t;
+    cin >> t;
+    while(t--) {
+        ull n,i=1,total=0;
+        cin >> n;
+        while(n%i==0) {
+            total++;
+            i++;
+        }
+        cout << total << endl;
+    }
     return 0;
 }
