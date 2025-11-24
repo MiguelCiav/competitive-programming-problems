@@ -93,7 +93,15 @@ finish_problem() {
     fi
     
     # Create destination directory if it doesn't exist
-    local dest_dir="$SCRIPT_DIR/$destination_route"
+    # Check if destination_route is an absolute path or relative path
+    local dest_dir
+    if [[ "$destination_route" = /* ]]; then
+        # Absolute path
+        dest_dir="$destination_route"
+    else
+        # Relative path
+        dest_dir="$SCRIPT_DIR/$destination_route"
+    fi
     mkdir -p "$dest_dir"
     
     # Move .cpp and .in files to destination
