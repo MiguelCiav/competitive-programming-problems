@@ -3,17 +3,18 @@
 # Script to manage competitive programming problems
 # Usage:
 #   problem start <problem_name>  - Create a new problem workspace
-#   problem finish <problem_name> <route> - Move completed problem to destination
+#   problem finish <problem_name> - Move completed problem to SOLVED/<problem_name>
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TEMPLATES_DIR="$SCRIPT_DIR/TEMPLATES"
 TO_SOLVE_DIR="$SCRIPT_DIR/TO_SOLVE"
+SOLVED_DIR="$SCRIPT_DIR/SOLVED"
 
 # Function to display usage
 usage() {
     echo "Usage:"
-    echo "  problem start <problem_name>   - Create a new problem workspace"
-    echo "  problem finish <problem_name> <route> - Move completed problem to destination"
+    echo "  problem start <problem_name>  - Create a new problem workspace"
+    echo "  problem finish <problem_name> - Move completed problem to SOLVED/<problem_name>"
     exit 1
 }
 
@@ -77,10 +78,9 @@ start_problem() {
 # Function to finish a problem
 finish_problem() {
     local problem_name="$1"
-    local destination_route="$2"
     
-    if [ -z "$problem_name" ] || [ -z "$destination_route" ]; then
-        echo "Error: Both problem name and destination route are required"
+    if [ -z "$problem_name" ]; then
+        echo "Error: Problem name is required"
         usage
     fi
     
@@ -92,29 +92,21 @@ finish_problem() {
         exit 1
     fi
     
-    # Create destination directory if it doesn't exist
-    # Check if destination_route is an absolute path or relative path
-    local dest_dir
-    if [[ "$destination_route" = /* ]]; then
-        # Absolute path
-        dest_dir="$destination_route"
-    else
-        # Relative path
-        dest_dir="$SCRIPT_DIR/$destination_route"
-    fi
+    # Create destination directory SOLVED/<problem_name>
+    local dest_dir="$SOLVED_DIR/$problem_name"
     mkdir -p "$dest_dir"
     
     # Move .cpp and .in files to destination
     if [ -f "$problem_dir/${problem_name}.cpp" ]; then
         mv "$problem_dir/${problem_name}.cpp" "$dest_dir/"
-        echo "Moved ${problem_name}.cpp to $destination_route"
+        echo "Moved ${problem_name}.cpp to SOLVED/$problem_name"
     else
         echo "Warning: ${problem_name}.cpp not found"
     fi
     
     if [ -f "$problem_dir/${problem_name}.in" ]; then
         mv "$problem_dir/${problem_name}.in" "$dest_dir/"
-        echo "Moved ${problem_name}.in to $destination_route"
+        echo "Moved ${problem_name}.in to SOLVED/$problem_name"
     else
         echo "Warning: ${problem_name}.in not found"
     fi
