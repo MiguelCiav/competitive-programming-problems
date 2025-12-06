@@ -96,14 +96,23 @@ finish_problem() {
     local dest_dir="$SOLVED_DIR/$problem_name"
     mkdir -p "$dest_dir"
     
-    # Move .cpp and .in files to destination
+    # Move .cpp files to destination
     if [ -f "$problem_dir/${problem_name}.cpp" ]; then
         mv "$problem_dir/${problem_name}.cpp" "$dest_dir/"
         echo "Moved ${problem_name}.cpp to SOLVED/$problem_name"
     else
-        echo "Warning: ${problem_name}.cpp not found"
+        echo "Note: ${problem_name}.cpp not found, trying ${problem_name}.py"
+    fi
+
+    # Move .py files to destination
+    if [ -f "$problem_dir/${problem_name}.py" ]; then
+        mv "$problem_dir/${problem_name}.py" "$dest_dir/"
+        echo "Moved ${problem_name}.py to SOLVED/$problem_name"
+    else
+        echo "Warning: ${problem_name}.py not found"
     fi
     
+    # Move .in files to destination
     if [ -f "$problem_dir/${problem_name}.in" ]; then
         mv "$problem_dir/${problem_name}.in" "$dest_dir/"
         echo "Moved ${problem_name}.in to SOLVED/$problem_name"
