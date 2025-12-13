@@ -13,8 +13,9 @@ SOLVED_DIR="$SCRIPT_DIR/SOLVED"
 # Function to display usage
 usage() {
     echo "Usage:"
-    echo "  problem start <problem_name>  - Create a new problem workspace"
-    echo "  problem finish <problem_name> - Move completed problem to SOLVED/<problem_name>"
+    echo "  problem start <problem_name>          - Create a new problem workspace"
+    echo "  problem finish <problem_name> [judge] - Move completed problem to SOLVED/[judge]/<problem_name>"
+    echo "      judge options: UVa, Codeforces (default)"
     exit 1
 }
 
@@ -78,6 +79,7 @@ start_problem() {
 # Function to finish a problem
 finish_problem() {
     local problem_name="$1"
+    local judge="$2"
     
     if [ -z "$problem_name" ]; then
         echo "Error: Problem name is required"
@@ -92,14 +94,20 @@ finish_problem() {
         exit 1
     fi
     
-    # Create destination directory SOLVED/<problem_name>
-    local dest_dir="$SOLVED_DIR/$problem_name"
+    # Determine judge folder
+    local judge_folder="CODEFORCES"
+    if [ "$judge" == "UVa" ]; then
+        judge_folder="UVa"
+    fi
+
+    # Create destination directory SOLVED/<judge>/<problem_name>
+    local dest_dir="$SOLVED_DIR/$judge_folder/$problem_name"
     mkdir -p "$dest_dir"
     
     # Move .cpp files to destination
     if [ -f "$problem_dir/${problem_name}.cpp" ]; then
         mv "$problem_dir/${problem_name}.cpp" "$dest_dir/"
-        echo "Moved ${problem_name}.cpp to SOLVED/$problem_name"
+        echo "Moved ${problem_name}.cpp to $dest_dir"
     else
         echo "Note: ${problem_name}.cpp not found, trying ${problem_name}.py"
     fi
@@ -107,15 +115,15 @@ finish_problem() {
     # Move .py files to destination
     if [ -f "$problem_dir/${problem_name}.py" ]; then
         mv "$problem_dir/${problem_name}.py" "$dest_dir/"
-        echo "Moved ${problem_name}.py to SOLVED/$problem_name"
+        echo "Moved ${problem_name}.py to $dest_dir"
     else
-        echo "Warning: ${problem_name}.py not found"
+        echo "Note: ${problem_name}.py not found"
     fi
     
     # Move .in files to destination
     if [ -f "$problem_dir/${problem_name}.in" ]; then
         mv "$problem_dir/${problem_name}.in" "$dest_dir/"
-        echo "Moved ${problem_name}.in to SOLVED/$problem_name"
+        echo "Moved ${problem_name}.in to $dest_dir"
     else
         echo "Warning: ${problem_name}.in not found"
     fi
@@ -127,7 +135,7 @@ finish_problem() {
     # Git operations
     cd "$SCRIPT_DIR" || exit 1
     git add .
-    git commit -m "just finished problem $problem_name"
+    git commit -m "just finished problem $problem_name ($judge_folder)"
     
     echo ""
     echo "Problem '$problem_name' finished successfully!"

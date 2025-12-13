@@ -22,7 +22,25 @@ void task_2() {
 }
 
 void task_3() {
-    
+    int d = 9, m = 8, y = 2010;
+
+    // 1. Create a year_month_day object using the '/' operator syntax
+    // This handles the types automatically. No need to subtract 1900 or 1.
+    auto date = chrono::year{y} / chrono::month{static_cast<unsigned>(m)} / chrono::day{static_cast<unsigned>(d)};
+
+    // 2. Validate the date (Safety check built-in!)
+    if (!date.ok()) {
+        cout << "Invalid date!" << endl;
+        return;
+    }
+
+    // 3. Convert to sys_days (system time in days) to compute calendar logic
+    // Then automatically convert that to a 'weekday' type
+    chrono::weekday wd{chrono::sys_days{date}};
+
+    // 4. Print the result
+    // {:%A} is the C++20 format specifier for the full weekday name.
+    cout << format("{:%A}", wd) << endl;
 }
 
 void task_4() {
@@ -34,7 +52,42 @@ void task_4() {
 }
 
 void task_5() {
-    
+    // 1. Setup: A vector of year_month_day objects
+    // representing distinct birthdates.
+    vector<chrono::year_month_day> birthdays = {
+        chrono::year{1990} / chrono::month{5} / chrono::day{15},  // May 15, 1990 (35 years old)
+        chrono::year{2010} / chrono::month{1} / chrono::day{10},  // Jan 10, 2010 (15 years old)
+        chrono::year{1995} / chrono::month{5} / chrono::day{15},  // May 15, 1995 (30 years old)
+        chrono::year{2015} / chrono::month{8} / chrono::day{20},  // Aug 20, 2015 (10 years old)
+        chrono::year{1990} / chrono::month{1} / chrono::day{10}   // Jan 10, 1990 (35 years old)
+    };
+
+    // 2. The Sorting Logic
+    // We use a lambda function [](...) to define the custom order.
+    ranges::sort(birthdays, [](const chrono::year_month_day& a, const chrono::year_month_day& b) {
+        
+        // Priority 1: Ascending Month (Jan < Feb < ...)
+        if (a.month() != b.month()) {
+            return a.month() < b.month();
+        }
+
+        // Priority 2: Ascending Day (1st < 2nd < ...)
+        if (a.day() != b.day()) {
+            return a.day() < b.day();
+        }
+
+        // Priority 3: Ascending Age
+        // Note: Lower Age = Higher Birth Year.
+        // To sort by "Youngest First" (Age 10 < Age 30), 
+        // we must check if Year A > Year B.
+        return a.year() > b.year(); 
+    });
+
+    // 3. Output
+    cout << "Sorted by Month -> Day -> Age (Youngest first):" << endl;
+    for (const auto& bd : birthdays) {
+        cout << format("{:%B %d, %Y}", bd) << endl; 
+    }
 }
 
 void task_6() {
@@ -91,7 +144,7 @@ int main() {
     /* Task 2: Given an integer n (n ≤ 15), print π to n digits after the decimal point (rounded). */
     // task_2();
 
-    // TODO
+    // DONE
     // Task 3: Given a date, determine the day of the week (Monday, . . . , Sunday) on that day.
     // task_3();
 
@@ -99,7 +152,7 @@ int main() {
     // Task 4: Given n random integers, print the distinct (unique) integers in sorted order.
     // task_4();
 
-    // TODO
+    // DONE
     // Task 5: Given the distinct and valid birthdates of n people as triples (DD, MM, YYYY), order them first by ascending birth months (MM), then by ascending birth dates (DD), and finally by ascending age.
     // task_5();
 
@@ -111,11 +164,11 @@ int main() {
     // Task 7: Generate all possible permutations of {‘A’, ‘B’, ‘C’, . . . , ‘J’}, the first N = 10 letters in the alphabet.
     // task_7();
 
-    // TODO
+    // DONE
     // Task 8: Generate all possible subsets of {0, 1, 2, . . . , N-1}, for N = 20.
-    task_8();
+    //task_8();
 
-    // TODO
+    // WON'T DO LOL
     // Task 9: Given a string that represents a base X number, convert it to an equivalent string in base Y, 2 ≤ X, Y ≤ 36. For example: “FF” in base X = 16 (hexadecimal) is “255” in base Y1 = 10 (decimal) and “11111111” in base Y2 = 2 (binary)
     // task_9();
 

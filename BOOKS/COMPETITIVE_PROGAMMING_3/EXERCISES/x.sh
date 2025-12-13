@@ -1,6 +1,6 @@
 #!/bin/bash
 COMPILER="g++"
-FLAGS="-std=c++17 -Wall -Wextra -O2"
+FLAGS="-std=c++20 -Wall -Wextra -O2"
 if [ $# -eq 0 ]; then
     echo "Uso: ./run.sh <nombre_archivo>"
     exit 1
